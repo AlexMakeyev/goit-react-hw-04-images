@@ -62,6 +62,17 @@ export class App extends React.Component  {
       };
     });
   };
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+  };
+  handleImg = largeUrl => {
+    this.setState({ largeImgUrl: largeUrl });
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+  };
   render() {
     const { loading, showModal, images, largeImgUrl } = this.state;
     return(<div>

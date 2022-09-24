@@ -8,8 +8,9 @@ export const ImageGalleryItem = ({ url, largeImageURL, onClick }) => {
       src={url}
       alt=""
       className=""
-      onClick={() => onClick(largeImageURL)
-      }
+      onClick={() => {
+        onClick(largeImageURL);
+      }}
     />
   );
 };

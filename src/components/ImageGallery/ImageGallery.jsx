@@ -5,7 +5,7 @@ import {ImageGalleryItem} from "components/ImageGalleryItem/ImageGalleryItem";
 
 export const ImageGallery = ({ imgs, onClick }) => {
     return (
-      <ul className=''>
+      <ul className="">
         {imgs.map(img => {
           return (
             <li key={img.id}>
