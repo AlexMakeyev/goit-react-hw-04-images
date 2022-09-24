@@ -1,4 +1,4 @@
-import ImageGalleryItem from "components/ImageGalleryItem/ImageGalleryItem";
+import {ImageGalleryItem} from "components/ImageGalleryItem/ImageGalleryItem";
 import React from "react";
 
 export class ImageGallery extends React.Component {

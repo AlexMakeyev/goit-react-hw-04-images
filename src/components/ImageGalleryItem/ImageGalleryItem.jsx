@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-const ImageGalleryItem = ({ url, largeImageURL, onClick }) => {
+export const ImageGalleryItem = ({ url, largeImageURL, onClick }) => {
   return (
     <img
       src={url}
@@ -15,7 +15,7 @@ const ImageGalleryItem = ({ url, largeImageURL, onClick }) => {
   );
 };
 
-export default ImageGalleryItem;
+
 
 ImageGalleryItem.propTypes = {
   url: PropTypes.string.isRequired,
