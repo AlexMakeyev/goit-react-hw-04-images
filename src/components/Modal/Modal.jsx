@@ -1,26 +1,27 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
+import { Overlay, ModalWindow } from './Modal.styled';
 
 
 const modalRoot = document.querySelector('#modal-root');
 
 export class Modal extends React.Component {
-  // вешаем слушатель события (клавиатуры)
+  
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown);
   }
-  // снимаем слушатель события (клавиатуры)
+  
   componentWillUnmount() {
     window.removeEventListener('Keydown', this.handleKeyDown);
   }
-  // закрываем модалку по Escape
+  
   handleKeyDown = e => {
     if (e.code === 'Escape') {
       this.props.onClose();
     }
   };
-  // закрываем модалку по клику в бэкдроп
+  
   handleBackdropClick = e => {
     if (e.currentTarget === e.target) {
       this.props.onClose();
@@ -33,11 +34,11 @@ export class Modal extends React.Component {
 
   render() {
     return createPortal(
-      <div className='' onClick={this.handleBackdropClick}>
-        <div className=''>
+      <Overlay  onClick={this.handleBackdropClick}>
+        <ModalWindow >
           <img src={this.props.src} alt="" />
-        </div>
-      </div>,
+        </ModalWindow>
+      </Overlay>,
       modalRoot
     );
   }

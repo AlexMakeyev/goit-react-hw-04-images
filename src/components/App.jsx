@@ -1,10 +1,16 @@
 import React from "react";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { ImageGallery } from "./ImageGallery/ImageGallery";
 import { Searchbar } from "./Searchbar/Searchbar";
 import { fetchImages } from "./Api/Api";
 import {Button} from  "./Button/Button";
 import {Loader} from "./Loader/Loader";
 import {Modal} from './Modal/Modal';
+import { Alert } from "./Alert/Alert";
+
+
+
 
 export class App extends React.Component  {
 
@@ -13,7 +19,7 @@ export class App extends React.Component  {
     search: '',
     page: 0,
     loading: false,
-    error: null,
+    error: false,
     showModal: false,
     largeImgUrl: '',
   };
@@ -50,7 +56,7 @@ export class App extends React.Component  {
         images: [],
         search,
         page: 1,
-        error: null,
+        error: false,
       };
     });
     
@@ -74,10 +80,12 @@ export class App extends React.Component  {
     }));
   };
   render() {
-    const { loading, showModal, images, largeImgUrl } = this.state;
+    const { loading, showModal, error,  images, largeImgUrl } = this.state;
     return(<div>
       <Searchbar onSubmit = {this.handleSearchSubmit}/>
-      
+      {error && <Alert />}
+      <ToastContainer />
+
       {images.length > 0 && (
           <div>
             <ImageGallery imgs={this.state.images} onClick={this.handleImg} />

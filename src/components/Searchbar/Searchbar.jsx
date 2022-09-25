@@ -1,6 +1,10 @@
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import {  toast } from 'react-toastify';
+import { Formik } from "formik";
+import { FcSearch} from 'react-icons/fc';
+import { SearchbarHeader, SearchForm, SearchFormInput, SearchFormButton, SearchIcon, SearchError} from "./Serchbar.styled";
 import * as yup from 'yup';
+
 // import PropTypes from 'prop-types';
 
 
@@ -16,37 +20,38 @@ export const Searchbar = ({onSubmit}) => {
 
   const handleSubmit = async (values, actions) => {
     if(values.search.trim() === '') {
-        alert('enter text')
+        toast.error('Enter text!')
         return;
       }   
       await onSubmit(values.search);
       actions.setSubmitting(false);
       actions.resetForm();
     };
-   return(<header className="searchbar">
+   return(
+   <SearchbarHeader >
       <Formik initialValues={initialValues} validationSchema={schema}
                   onSubmit ={handleSubmit} 
                   >
       {({isSubmitting}) => (
-        <Form className="form">
-        <button type="submit" className="button" disabled={isSubmitting}>
-          <span className="button-label">Search</span>
-        </button>
+        <SearchForm>
+        <SearchFormButton type="submit" disabled={isSubmitting}>
+          <SearchIcon><FcSearch size = {30}/></SearchIcon>
+        </SearchFormButton>
     
-        <Field
-          className="input"
+        <SearchFormInput
           type="text"
           autoComplete="off"
           autoFocus
           placeholder="Search images and photos"
           name="search"
         />
-        <ErrorMessage name="search"/>
         
-      </Form>
+        <SearchError name="search">Enter Sonething</SearchError>
+        
+      </SearchForm >
       )}
       </Formik>
-    </header>)
+    </SearchbarHeader>)
     }
 
 // validationSchema={schema}

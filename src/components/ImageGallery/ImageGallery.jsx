@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import {ImageGalleryItem} from "components/ImageGalleryItem/ImageGalleryItem";
-
+import { Gallery } from "./ImageGallery.styled";
 
 export const ImageGallery = ({ imgs, onClick }) => {
     return (
-      <ul className="">
+      <Gallery >
         {imgs.map(img => {
           return (
             <li key={img.id}>
@@ -17,7 +17,7 @@ export const ImageGallery = ({ imgs, onClick }) => {
             </li>
           );
         })}
-      </ul>
+      </Gallery>
     );
   };
   ImageGallery.propTypes = {

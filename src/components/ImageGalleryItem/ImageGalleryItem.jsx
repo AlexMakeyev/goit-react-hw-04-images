@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Image } from './ImageGalleryItem.styled';
 
 
 export const ImageGalleryItem = ({ url, largeImageURL, onClick }) => {
   return (
-    <img
+    <Image
       src={url}
       alt=""
-      className=""
       onClick={() => {
         onClick(largeImageURL);
       }}
