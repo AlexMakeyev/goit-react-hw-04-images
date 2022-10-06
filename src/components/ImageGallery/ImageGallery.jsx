@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import {ImageGalleryItem} from "components/ImageGalleryItem/ImageGalleryItem";
 import { Gallery } from "./ImageGallery.styled";
 
-export const ImageGallery = ({ imgs, onClick }) => {
+export const ImageGallery = ({ images, onClick }) => {
     return (
       <Gallery >
-        {imgs.map(img => {
+        {images.map(({id, webformatURL, largeImageURL}) => {
           return (
-            <li key={img.id}>
+            <li key={id}>
               <ImageGalleryItem
-                url={img.webformatURL}
-                largeImageURL={img.largeImageURL}
+                webformatURL={webformatURL}
+                largeImageURL={largeImageURL}
                 onClick={onClick}
               />
             </li>

@@ -1,9 +1,9 @@
 import React from "react";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ImageGallery } from "./ImageGallery/ImageGallery";
 import { Searchbar } from "./Searchbar/Searchbar";
-import { fetchImages } from "./Api/Api";
+import * as API from "./Api/Api";
 import {Button} from  "./Button/Button";
 import {Loader} from "./Loader/Loader";
 import {Modal} from './Modal/Modal';
@@ -21,34 +21,33 @@ export class App extends React.Component  {
     loading: false,
     error: false,
     showModal: false,
-    largeImgUrl: '',
+    largeImageURL: '',
+    totalPages: 0,
   };
+  loadImages = async (search, page) => {
+    this.setState({ loading: true });
 
-  componentDidUpdate(prevProps, prevState) {
-    const prevPage = prevState.page;
-    const nextPage = this.state.page;
-    const prevSearch = prevState.search;
-    const nextSearch = this.state.search;
+    try {
+      const data = await API.fetchImages(search, page);
+      this.setState(prevState => ({
+        images: [...prevState.images, ...data.hits],
+        totalPages: data.totalHits,
+      }));
+    } catch (error) {
+      this.setState({ error: true });
+    } finally {
+      this.setState({ loading: false });
 
-    if (prevPage !== nextPage || prevSearch !== nextSearch) {
-      this.setState({ loading: true });
-      fetchImages(this.state.search, this.state.page)
-        .then(data => {
-          if (data.total === 0) {
-            return Promise.reject(new Error());
-          }
-          this.setState(({ images }) => {
-            return {
-              images: images.concat(data),
-            };
-          });
-        })
-        .catch(error => this.setState({ error }))
-        .finally(() => {
-          this.setState({ loading: false });
-        });
     }
   };
+  componentDidUpdate(prevProps, prevState) {
+    const { search, page } = this.state;
+    if (prevState.search !== search || prevState.page !== page) {
+      this.loadImages(search, page);
+    }
+  }
+
+  
 
   handleSearchSubmit = search => {
     this.setState(prevState => {
@@ -57,6 +56,7 @@ export class App extends React.Component  {
         search,
         page: 1,
         error: false,
+        totalPages: 0,
       };
     });
     
@@ -74,13 +74,13 @@ export class App extends React.Component  {
     }));
   };
   handleImg = largeUrl => {
-    this.setState({ largeImgUrl: largeUrl });
+    this.setState({ largeImageURL: largeUrl });
     this.setState(({ showModal }) => ({
       showModal: !showModal,
     }));
   };
   render() {
-    const { loading, showModal, error,  images, largeImgUrl } = this.state;
+    const { images, loading, error, largeImageURL, page, totalPages, showModal } = this.state;
     return(<div>
       <Searchbar onSubmit = {this.handleSearchSubmit}/>
       {error && <Alert />}
@@ -88,12 +88,14 @@ export class App extends React.Component  {
 
       {images.length > 0 && (
           <div>
-            <ImageGallery imgs={this.state.images} onClick={this.handleImg} />
-            <Button onClick={this.onLoadMoreBtnClick} />
+            <ImageGallery images={images} onClick={this.handleImg} />
+            {page < Math.ceil(totalPages / 12) && (
+          <Button onClick={this.onLoadMoreBtnClick} />
+        )}
           </div>
         )}
         {loading && <Loader />}
-        {showModal && <Modal onClose={this.toggleModal} src={largeImgUrl} />}
+        {showModal && <Modal onClose={this.toggleModal} src={largeImageURL} />}
     </div>
       );
   
