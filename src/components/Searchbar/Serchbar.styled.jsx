@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import {Form, Field, ErrorMessage} from "formik";
+// import {Form, Field, ErrorMessage} from "formik";
 export const SearchbarHeader = styled.header`
   top: 0;
   left: 0;
@@ -19,7 +19,7 @@ export const SearchbarHeader = styled.header`
     0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 `;
 
-export const SearchForm = styled(Form)`
+export const SearchForm = styled.form`
   display: flex;
   align-items: center;
   width: 100%;
@@ -28,7 +28,7 @@ export const SearchForm = styled(Form)`
   border-radius: 3px;
   overflow: hidden;
   `;
-export const SearchFormInput = styled(Field)`
+export const SearchFormInput = styled.input`
     display: inline-block;
     width: 100%;
     font: inherit;
@@ -60,7 +60,7 @@ export const SearchIcon = styled.span`
 cursor: pointer;
 
 `
-export const SearchError = styled(ErrorMessage)`
+// export const SearchError = styled(ErrorMessage)`
 
-font-size: 20px;
-`
+// font-size: 20px;
+// `
