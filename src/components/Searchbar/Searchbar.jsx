@@ -18,9 +18,8 @@ export const Searchbar = ({onSubmit}) => {
     event.preventDefault();
     const isValid = validateForm(search);
     if (isValid && search.trim() !== '' ) {
-      toast.info('...is already searching', {
-        position: toast.POSITION.TOP_LEFT
-      });
+      toast.info('...is already searching');
+      
     } else if (search.trim() === '') {
       toast.error('Enter text!');
       return;
