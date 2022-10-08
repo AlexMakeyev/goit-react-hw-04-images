@@ -5,7 +5,8 @@ import { Overlay, ModalWindow } from './Modal.styled';
 
 const modalRoot = document.getElementById('modal-root')
 
-export  function Modal({ largeImageURL, onClose }) {
+export  function Modal({ src, onClose }) {
+  
   const handleBackdropClick = event => {
     if (event.currentTarget === event.target) {
       onClose();
@@ -29,7 +30,7 @@ export  function Modal({ largeImageURL, onClose }) {
   const instance = (
     <Overlay onClick={handleBackdropClick}>
       <ModalWindow>
-        <img src={largeImageURL} alt="" />
+        <img src={src} alt="" />
       </ModalWindow>
     </Overlay>
   );
